@@ -6,9 +6,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		Almacen almacen =new Almacen();
-	
+		
 		Thread hilosMozos[]= new Thread[3];
-		Thread hiloAlmacen= new Thread(almacen);
+		Thread hiloAlmacen= new Thread( new JefeAlmacen(almacen));
 		hiloAlmacen.start();
 		for (int i = 0; i < 3; i++) {
 			hilosMozos[i]= new Thread(new Mozo(almacen,i+1));
@@ -16,7 +16,7 @@ public class Main {
 		for (int i = 0; i < 3; i++) {
 			hilosMozos[i].start();
 		}
-		//CODIGO PARA INTERRUMPIR LOS HILOS SECUNDARIOS Y FINALIZAR EL PROGRAMA
+		
 		try {
 			TimeUnit.MINUTES.sleep(1);
 			
@@ -26,8 +26,7 @@ public class Main {
 			}
 			System.out.println("Fin del programa");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 
 
